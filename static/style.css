@@ -1,0 +1,13 @@
+html, body {
+  font-family: monospace;
+}
+
+table {
+  border: 1px solid #eee;
+}
+
+th {
+  background-color: #000;
+  color: #fff;
+  padding: .5em;
+}

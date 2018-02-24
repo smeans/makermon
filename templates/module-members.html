@@ -1,0 +1,30 @@
+<h2>members</h2>
+<table>
+  <thead>
+    <tr>
+      <th>member id</th>
+      <th>name</th>
+      <th>fob id</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for member in members %}
+    <tr>
+      <td>{{ member['member_id'] }}</td>
+      <td>{{ member['name'] }}</td>
+      <td>{{ member['fob_id'] }}</td>
+    </tr>
+    {% end %}
+    <form method="POST">
+      <input type="hidden" name="_service_action" value="add_member"/>
+    <tr>
+      <td>&nbsp;</td>
+      <td><input name="name"></td>
+      <td>
+        <input name="fob_id">
+        <button type="submit">add</button>
+      </td>
+    </tr>
+    </form>
+  </tbody>
+</table>
