@@ -17,6 +17,25 @@ class MainHandler(tornado.web.RequestHandler):
             uimodules.service_actions[service_action](self)
         self.render('index.html', title='home')
 
+class PermHandler(tornado.web.RequestHandler):
+    def get(self,permPath):
+        paths = permPath.split( '/' )
+        cn = sqlite3.connect('makermon.db')
+        c = cn.cursor()
+        fob_id = paths[1]
+        sql = 'SELECT * FROM members WHERE fob_id = "%s"' % ( fob_id )
+        c.execute( sql )
+        if c.fetchone != None:
+            self.set_status( 200 )
+        else:
+            self.set_status( 301 )
+        self.finish()
+        #if paths[0] == 'frontdoor':
+        #    self.set_status( 200 )
+        #    self.finish()
+    def post(self):
+        pass
+
 def make_app():
     settings = {
         'debug': True,
@@ -27,9 +46,11 @@ def make_app():
 
     return tornado.web.Application([
         (r"/", MainHandler),
+        (r"/perms/(.*)", PermHandler),
     ], **settings)
 
 if __name__ == "__main__":
     app = make_app()
     app.listen(8888)
+    print( "Makermon server started..." )
     tornado.ioloop.IOLoop.current().start()
