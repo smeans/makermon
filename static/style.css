@@ -11,3 +11,13 @@ th {
   color: #fff;
   padding: .5em;
 }
+
+button.round {
+  border-radius: 50%;
+  background-color: #000;
+  color: #fff;
+}
+
+form.inline {
+  display: inline-block;
+}

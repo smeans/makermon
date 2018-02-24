@@ -10,7 +10,11 @@
   <tbody>
     {% for member in members %}
     <tr>
-      <td>{{ member['member_id'] }}</td>
+      <td><form class="inline" method="POST">
+        <input type="hidden" name="_service_action" value="delete_member"/>
+        <input type="hidden" name="member_id" value="{{ member['member_id'] }}"/>
+        <button class="round" type="submit">&#x2715;</button>
+      </form>{{ member['member_id'] }}</td>
       <td>{{ member['name'] }}</td>
       <td>{{ member['fob_id'] }}</td>
     </tr>
