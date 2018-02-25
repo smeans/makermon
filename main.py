@@ -25,10 +25,10 @@ class PermHandler(tornado.web.RequestHandler):
         fob_id = paths[1]
         sql = 'SELECT * FROM members WHERE fob_id = "%s"' % ( fob_id )
         c.execute( sql )
-        if c.fetchone != None:
+        self.set_status( 403 )
+        if len( c.fetchall() ):
             self.set_status( 200 )
-        else:
-            self.set_status( 301 )
+            self.write( 'authorized' )
         self.finish()
         #if paths[0] == 'frontdoor':
         #    self.set_status( 200 )
