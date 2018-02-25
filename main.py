@@ -28,7 +28,7 @@ class PermHandler(tornado.web.RequestHandler):
         self.set_status( 403 )
         if len( c.fetchall() ):
             self.set_status( 200 )
-            self.write( 'authorized' )
+            self.write( '{ "result": "authorized" }' )
         self.finish()
         #if paths[0] == 'frontdoor':
         #    self.set_status( 200 )
