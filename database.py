@@ -1,4 +1,6 @@
 # Handle database connections / requests and initial database creation / schema tracking
+# The schema set up like this might be mostly useless after initial db creation... 
+# might still be good to have for schema tracking??
 import sqlite3
 
 database = "makermon.db"
@@ -10,7 +12,8 @@ db_schema = {
         'last_name VARCHAR(25)',
         'email VARCHAR(50)',
         'start_date INTEGER',                       #integer for date fields will use unix time
-        'expiration_date INTEGER'
+        'expiration_date INTEGER',
+        'admin INTEGER'                             #has admin privileges
     ],
     'rfid_tokens': [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
