@@ -3,8 +3,6 @@
 # might still be good to have for schema tracking??
 import sqlite3
 
-database = "makermon.db"
-db_con = None
 db_schema = {
     'members': [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',     #autoincrement this instead of rowid so that id linking is not broken if a rowid is reused after a delete or db change
@@ -51,18 +49,38 @@ db_schema = {
     ]
 }
 
-#after connecting to database must execute
-#PRAGMA foreign_keys = ON;
-#disabled by defaul for backwards compat with sqlite2.
-def db_initialize():
-    #TODO: probably need to add a try / catch here to confirm connection
-    db_con = sqlite3.connect( database )
-    db_con.execute( 'PRAGMA foreign_keys = ON;' )    
-    
-    #initialize database creating non existant tables
-    for table in db_schema:
-        db_con.execute( 'CREATE TABLE IF NOT EXISTS %s ( %s )' % ( table, ', '.join( db_schema[ table ] ) ) )
-    
-    db_con.commit()
+class Database:
+    # pass in schema of None to just connect and not initialize the database
+    def __init__( self, database, schema ):
+        self.con = None
+        self.database = database
+        self.schema = schema
+        self.connected = False
+        self.__connect()
+        if schema != None:
+            self.__initialize()
 
-db_initialize()
+    #after connecting to database must execute
+    #PRAGMA foreign_keys = ON;
+    #disabled by defaul for backwards compat with sqlite2.
+    def __connect( self ):
+        #TODO: probably need to add a try / catch here to confirm connection
+        self.con = sqlite3.connect( self.database )
+        self.con.execute( 'PRAGMA foreign_keys = ON;' )
+        self.con.commit()
+        self.connected = True
+
+    def __initialize( self ):
+        #initialize database creating non existant tables
+        for table in self.schema:
+            self.con.execute( 'CREATE TABLE IF NOT EXISTS %s ( %s )' % ( table, ', '.join( self.schema[ table ] ) ) )
+        self.con.commit()
+        
+    def commit( self ):
+        self.con.commit()
+
+    def execute( self, sql ):
+        self.con.execute( sql )
+
+    def cursor( self ):
+        return self.con.cursor()

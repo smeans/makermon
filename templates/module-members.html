@@ -3,8 +3,13 @@
   <thead>
     <tr>
       <th>member id</th>
-      <th>name</th>
-      <th>fob id</th>
+      <th>first name</th>
+      <th>last name</th>
+      <th>email</th>
+      <th>start date</th>
+      <th>expiration date</th>
+      <th>admin</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -12,22 +17,29 @@
     <tr>
       <td><form class="inline" method="POST">
         <input type="hidden" name="_service_action" value="delete_member"/>
-        <input type="hidden" name="member_id" value="{{ member['member_id'] }}"/>
+        <input type="hidden" name="member_id" value="{{ member['id'] }}"/>
         <button class="round" type="submit">&#x2715;</button>
-      </form>{{ member['member_id'] }}</td>
-      <td>{{ member['name'] }}</td>
-      <td>{{ member['fob_id'] }}</td>
+      </form>{{ member['id'] }}</td>
+      <td>{{ member['first_name'] }}</td>
+      <td>{{ member['last_name'] }}</td>
+      <td>{{ member['email'] }}</td>
+      <td>{{ member['start_date'] }}</td>
+      <td>{{ member['expiration_date'] }}</td>
+      <td>{{ member['admin'] }}</td>
+      <td></td>
     </tr>
     {% end %}
     <form method="POST">
       <input type="hidden" name="_service_action" value="add_member"/>
     <tr>
       <td>&nbsp;</td>
-      <td><input name="name"></td>
-      <td>
-        <input name="fob_id">
-        <button type="submit">add</button>
-      </td>
+      <td><input type="text" name="first_name"></td>
+      <td><input type="text" name="last_name"></td>
+      <td><input type="text" name="email"></td>
+      <td><input type="text" name="start_date"></td>
+      <td><input type="text" name="expiration_date"></td>
+      <td><input type="checkbox" name="admin" value="1"></td>
+      <td><button type="submit">add</button></td>
     </tr>
     </form>
   </tbody>

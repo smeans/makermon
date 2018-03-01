@@ -2,7 +2,7 @@ import sqlite3
 
 cn = sqlite3.connect('makermon.db')
 
-#schema = {'members': ['name', 'fob_id']}
+schema = { 'members': [ 'id', 'first_name', 'last_name', 'email', 'start_date', 'expiration_date', 'admin'  ] }
 
 #cn.execute('CREATE TABLE IF NOT EXISTS members (%s)' % ', '.join(schema['members']))
 #cn.commit()
@@ -22,10 +22,10 @@ def vallist(data):
 def members():
     c = cn.cursor()
 
-    c.execute('SELECT ROWID, * FROM members')
-    #cols = ['member_id'] + schema['members']
+    c.execute('SELECT * FROM members')
+    cols = schema['members']
 
-    #members = [dict(zip(cols, row)) for row in c.fetchall()]
+    members = [dict(zip(cols, row)) for row in c.fetchall()]
 
     return members
 
@@ -35,5 +35,5 @@ def add_member(data):
     cn.commit()
 
 def delete_member(member_id):
-    cn.execute('DELETE FROM members WHERE ROWID = ?', member_id)
+    cn.execute('DELETE FROM members WHERE id = ?', member_id)
     cn.commit()

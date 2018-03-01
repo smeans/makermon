@@ -51,6 +51,7 @@ def make_app():
     ], **settings)
 
 if __name__ == "__main__":
+    db = database.Database( 'makermon.db', database.db_schema )
     app = make_app()
     app.listen(8888)
     print( "Makermon server started..." )
