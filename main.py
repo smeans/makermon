@@ -3,6 +3,7 @@ import sqlite3
 import tornado.ioloop
 import tornado.web
 
+import database
 import uimodules
 
 PATH = os.path.dirname(os.path.realpath(__file__))

@@ -2,16 +2,16 @@ import sqlite3
 
 cn = sqlite3.connect('makermon.db')
 
-schema = {'members': ['name', 'fob_id']}
+#schema = {'members': ['name', 'fob_id']}
 
-cn.execute('CREATE TABLE IF NOT EXISTS members (%s)' % ', '.join(schema['members']))
-cn.commit()
+#cn.execute('CREATE TABLE IF NOT EXISTS members (%s)' % ', '.join(schema['members']))
+#cn.commit()
 
 def escape(s):
     return s.replace("'", "''")
 
 def colnames(data):
-    return '%s' % ', '.join([escape(key) for key in data.keys()]);
+    return '%s' % ', '.join([escape(key) for key in data.keys()])
 
 def valmask(data):
     return ', '.join(['?'] * len(data.keys()))
@@ -23,9 +23,9 @@ def members():
     c = cn.cursor()
 
     c.execute('SELECT ROWID, * FROM members')
-    cols = ['member_id'] + schema['members']
+    #cols = ['member_id'] + schema['members']
 
-    members = [dict(zip(cols, row)) for row in c.fetchall()]
+    #members = [dict(zip(cols, row)) for row in c.fetchall()]
 
     return members
 
