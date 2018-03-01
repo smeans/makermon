@@ -1,0 +1,6 @@
+{
+    "oauth2":{
+        "clientId": "changeme.apps.googleusercontent.com",
+        "clientSecret": "changeme"
+    }
+}

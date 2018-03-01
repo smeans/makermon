@@ -1,3 +1,4 @@
+import config
 import os
 import sqlite3
 import tornado.ioloop
@@ -50,6 +51,7 @@ def make_app():
     ], **settings)
 
 if __name__ == "__main__":
+    config.init()
     app = make_app()
     app.listen(8888)
     print( "Makermon server started..." )
