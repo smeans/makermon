@@ -38,6 +38,16 @@ class PermHandler(tornado.web.RequestHandler):
     def post(self):
         pass
 
+class BaseHandler(tornado.web.RequestHandler):
+    def get_current_user(self):
+        return self.get_secure_cookie(config.settings["authCookie"]["name"])
+
+class ExampleAuthRequiredHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        print 'user can see secret area'
+        self.render('index.html', title='Secret Area')
+
 def make_app():    
     settings = {
         'debug': True,
@@ -56,6 +66,7 @@ def make_app():
         (r"/", MainHandler),
         (r"/auth/login", authentication.GoogleOAuth2LoginHandler),
         (r"/auth/logout", authentication.LogoutHandler),
+        (r"/secure", ExampleAuthRequiredHandler),
         (r"/perms/(.*)", PermHandler),
     ], **settings)
 
