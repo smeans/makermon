@@ -11,25 +11,26 @@ db_schema = {
         'email VARCHAR(50)',
         'start_date INTEGER',                       #integer for date fields will use unix time
         'expiration_date INTEGER',
-        'admin INTEGER'                             #has admin privileges
+        'admin INTEGER DEFAULT 0',                  #has admin privileges
+        'enabled INTEGER DEFAULT 1'
     ],
     'rfid_tokens': [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
         'member_id INTEGER',
         'token VARCHAR(50)',                        #the token id stored on the card
-        'enabled INTEGER',
+        'enabled INTEGER DEFAULT 1',
         'FOREIGN KEY( member_id ) REFERENCES members( id )'
     ],
     'items': [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
         'description TEXT',
-        'enabled INTEGER',
+        'enabled INTEGER DEFAULT 0',
         'disabled_reason TEXT'
     ],
     'training': [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
         'description TEXT',
-        'valid_length INTEGER'
+        'valid_length INTEGER DEFAULT 0'
     ],
     'required_training': [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',

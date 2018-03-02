@@ -1,3 +1,10 @@
+<script language="javascript">
+  function showTokenAdd(ele) {
+    var mId = ele.getAttribute( 'target' );
+    var sId = 'addToken' + mId;
+    document.getElementById( sId ).style.display = 'block';
+  }
+</script>
 <h2>members</h2>
 <table>
   <thead>
@@ -26,13 +33,43 @@
       <td>{{ member['start_date'] }}</td>
       <td>{{ member['expiration_date'] }}</td>
       <td>{{ member['admin'] }}</td>
-      <td></td>
+      <td><button onclick="showTokenAdd( this )" target="{{ member['id'] }}">Add Token</button></td>
     </tr>
+      {% for token in tokens %}
+        {% if token['member_id'] == member['id'] %}
+          <tr>
+            <td></td>
+            <td style="text-align: right;">
+              <form class="inline" method="POST">
+                <input type="hidden" name="_service_action" value="delete_token"/>
+                <input type="hidden" name="token_id" value="{{ token['id'] }}"/>
+                <button class="round" type="submit">&#x2715;</button>
+              </form>
+            </td>
+            <td colspan="6">{{ token['token'] }}</td>
+          </tr>
+        {% end %}
+      {% end %}
+      <tr>
+        <td></td>
+        <td></td>
+        <td colspan="6">
+          <div id="addToken{{ member['id'] }}" style="display: none;">
+            <form method="POST">
+              <input type="hidden" name="_service_action" value="add_token"/>
+              <input type="hidden" name="member_id" value="{{ member['id'] }}">
+              <input type="hidden" name="enabled" value="1">
+              <input type="text" name="token">
+              <button type="submit">add</button>
+            </form>
+          </div>
+        </td>
+      </tr>
     {% end %}
     <form method="POST">
       <input type="hidden" name="_service_action" value="add_member"/>
     <tr>
-      <td>&nbsp;</td>
+      <td>New Member</td>
       <td><input type="text" name="first_name"></td>
       <td><input type="text" name="last_name"></td>
       <td><input type="text" name="email"></td>
