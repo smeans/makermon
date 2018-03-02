@@ -23,9 +23,9 @@ class PermHandler(tornado.web.RequestHandler):
         paths = permPath.split( '/' )
         cn = sqlite3.connect('makermon.db')
         c = cn.cursor()
-        fob_id = paths[1]
-        sql = 'SELECT * FROM members m, rfid_tokens r WHERE m.enabled = 1 AND r.member_id = m.id AND r.enabled = 1 AND r.token = "%s"' % ( fob_id )
-        c.execute( sql )
+        fob_id = ( paths[1], )
+        sql = 'SELECT * FROM members m, rfid_tokens r WHERE m.enabled = 1 AND r.member_id = m.id AND r.enabled = 1 AND r.token = ?'
+        c.execute( sql, fob_id )
         self.set_status( 403 )
         if len( c.fetchall() ):
             self.set_status( 200 )
