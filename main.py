@@ -46,7 +46,7 @@ class BaseHandler(tornado.web.RequestHandler):
 class ExampleAuthRequiredHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        print 'user can see secret area'
+        print('user can see secret area')
         self.render('index.html', title='Secret Area')
 
 def make_app():    
