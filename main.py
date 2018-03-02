@@ -5,6 +5,7 @@ import sqlite3
 import tornado.ioloop
 import tornado.web
 
+import database
 import uimodules
 
 PATH = os.path.dirname(os.path.realpath(__file__))
@@ -24,9 +25,9 @@ class PermHandler(tornado.web.RequestHandler):
         paths = permPath.split( '/' )
         cn = sqlite3.connect('makermon.db')
         c = cn.cursor()
-        fob_id = paths[1]
-        sql = 'SELECT * FROM members WHERE fob_id = "%s"' % ( fob_id )
-        c.execute( sql )
+        fob_id = ( paths[1], )
+        sql = 'SELECT * FROM members m, rfid_tokens r WHERE m.enabled = 1 AND r.member_id = m.id AND r.enabled = 1 AND r.token = ?'
+        c.execute( sql, fob_id )
         self.set_status( 403 )
         if len( c.fetchall() ):
             self.set_status( 200 )
@@ -72,6 +73,7 @@ def make_app():
 
 if __name__ == "__main__":
     config.init()
+    db = database.Database( 'makermon.db', database.db_schema )
     app = make_app()
     app.listen(8888)
     print( "Makermon server started..." )
