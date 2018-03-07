@@ -1,4 +1,5 @@
 import os
+import sys
 import sqlite3
 import tornado.ioloop
 import tornado.web
@@ -6,7 +7,11 @@ import tornado.web
 import database
 import uimodules
 
+
 PATH = os.path.dirname(os.path.realpath(__file__))
+pid = str( os.getpid() )
+pid_file = open( 'm_server.pid', 'r+' )
+pid_file.write( pid )
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
