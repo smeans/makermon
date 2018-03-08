@@ -1,0 +1,11 @@
+{
+    "authCookie":{
+        "name": "makermonSession",
+        "secret": "abc123"
+    },
+    "oauth2":{
+        "clientId": "changeme.apps.googleusercontent.com",
+        "clientSecret": "changeme",
+        "requiredDomain": "colamakerspace.com"
+    }
+}

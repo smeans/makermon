@@ -104,5 +104,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# database
+#app-specific
+config.json
 makermon.db
