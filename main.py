@@ -1,4 +1,6 @@
 import os
+import sys
+import fcntl
 import sqlite3
 import tornado.ioloop
 import tornado.web
@@ -9,8 +11,14 @@ import uimodules
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 pid = str( os.getpid() )
-pid_file = open( 'm_server.pid', 'r+' )
-pid_file.write( pid )
+try:
+    pid_file = open( 'm_server.pid', 'w+' )
+    fcntl.flock( pid_file, fcntl.LOCK_EX | fcntl.LOCK_NB )
+    pid_file.write( pid )
+    pid_file.flush()
+except IOError:
+    print( "Failed to acquire lock on PID file, program must already be running" )
+    sys.exit()
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
