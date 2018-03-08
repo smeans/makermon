@@ -104,7 +104,8 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# database
+#app-specific
+config.json
 makermon.db
 m_server.pid
 fcntl.py
