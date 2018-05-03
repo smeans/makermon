@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+#twitter api keys
+twitter_keys/
+
 # Distribution / packaging
 .Python
 build/
